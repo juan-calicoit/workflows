@@ -450,8 +450,9 @@
     </div>
 
     <script>
-        // Webhook URL with secret key - replace this with your actual webhook URL
-        const WEBHOOK_URL = 'https://your-webhook-url.com/api/processstworkflows?key=YOUR_SECRET_KEY';
+        // Webhook URL and secret key - replace with your actual webhook URL
+        const WEBHOOK_URL = 'https://engine.rewst.io/webhooks/custom/trigger/0194fce0-33a2-774b-b7b8-b9e44e7c5c9b/0191fd3f-3981-7414-ad00-b0b52b71c763';
+        const SECRET_KEY = 'WkzF6eD8bP3xJaT7nR2qL5sG9cV4mH1yXXX'; // Strong random secret key - YOU SHOULD CHANGE THIS
         
         // Store workflow data globally
         let workflowData = {
@@ -485,9 +486,18 @@
             });
         }
         
-        // Fetch workflow data from webhook
+        // Fetch workflow data from webhook using GET with secret header
         function fetchWorkflowData() {
-            fetch(WEBHOOK_URL)
+            // Request options with custom header for authentication
+            const requestOptions = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-rewst-secret': SECRET_KEY
+                }
+            };
+            
+            fetch(WEBHOOK_URL, requestOptions)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
