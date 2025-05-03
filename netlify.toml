@@ -1,0 +1,14 @@
+# netlify.toml
+
+[build]
+  # Directory with the built HTML/JS/CSS files
+  publish = "."
+  
+  # Directory where functions are located
+  functions = "netlify/functions"
+
+[[redirects]]
+  # Redirect rule for SPA navigation 
+  from = "/*"
+  to = "/index.html"
+  status = 200
