@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Calico IT Workflows</title>
     <!-- Add Font Awesome from CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Add Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+=======
+    <title>Calico IT Process Workflow Viewer</title>
+>>>>>>> parent of 4f6a5af (Update index.html)
     <style>
         :root {
             --primary-color: #e67b3a; /* Calico IT Orange */
@@ -35,13 +39,25 @@
         }
         
         body {
+<<<<<<< HEAD
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
             background-color: var(--background);
+=======
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+>>>>>>> parent of 4f6a5af (Update index.html)
             max-width: 1200px;
             margin: 0 auto;
+            background-color: #fff;
             padding: 20px;
+<<<<<<< HEAD
             transition: background-color 0.3s ease;
         }
         
@@ -372,6 +388,98 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
+=======
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-container {
+            flex-grow: 1;
+            margin-right: 15px;
+        }
+        #search {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .sort-container {
+            display: flex;
+            align-items: center;
+        }
+        select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+        }
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .workflow-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .workflow-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .workflow-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+        .workflow-date {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .workflow-creator {
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        .workflow-description {
+            margin-top: 10px;
+            color: #34495e;
+            font-size: 14px;
+        }
+        .view-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .view-button:hover {
+            background-color: #2980b9;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #7f8c8d;
+>>>>>>> parent of 4f6a5af (Update index.html)
         }
         
         .pagination button:hover,
@@ -393,16 +501,49 @@
         
         .no-results {
             text-align: center;
+<<<<<<< HEAD
             padding: 20px;
             background-color: var(--card-background);
             color: var(--text-primary);
             border-radius: 8px;
             margin-top: 20px;
             transition: background-color 0.3s ease, color 0.3s ease;
+=======
+            padding: 40px;
+            font-size: 18px;
+            color: #e74c3c;
+        }
+        .stats {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .filter-button {
+            padding: 8px 15px;
+            background-color: #ecf0f1;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .filter-button.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .filter-button:hover {
+            background-color: #bdc3c7;
+>>>>>>> parent of 4f6a5af (Update index.html)
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <div class="top-bar">
         <img src="https://calicoit.com/wp-content/uploads/2025/01/CalicoIT_Logo_tagline-W.png" alt="Calico IT Logo" class="logo logo-dark-mode">
         <img src="https://calicoit.com/wp-content/uploads/2022/12/CalicoIT_Logo_tagline-2.png" alt="Calico IT Logo" class="logo logo-light-mode">
@@ -477,12 +618,43 @@
     <div id="no-results" class="no-results" style="display: none;">
         <i class="fas fa-search" style="font-size: 2em; margin-bottom: 10px; color: var(--primary-color);"></i>
         <p>No workflows found matching your search.</p>
+=======
+    <div class="container">
+        <h1>Calico IT Process Workflow Viewer</h1>
+        
+        <div class="controls">
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search workflows by name, creator, or description...">
+            </div>
+            <div class="sort-container">
+                <label for="sort">Sort by: </label>
+                <select id="sort">
+                    <option value="name">Name</option>
+                    <option value="updated">Last Updated</option>
+                    <option value="created">Created Date</option>
+                    <option value="creator">Creator</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="filters" id="yearFilters">
+            <button class="filter-button active" data-year="all">All Years</button>
+            <!-- Year filters will be added here dynamically -->
+        </div>
+        
+        <div class="stats" id="stats"></div>
+        
+        <div id="content">
+            <div class="loading">Loading workflows...</div>
+        </div>
+>>>>>>> parent of 4f6a5af (Update index.html)
     </div>
     
     <div class="footer">
         <p>© 2025 Calico IT Services. All rights reserved.</p>
     </div>
     <script>
+<<<<<<< HEAD
 Date(workflow.audit.updatedDate) >= firstDayOfMonth
             ).length;
             const thisMonthCard = createStatCard('Updated This Month', thisMonthWorkflows);
@@ -571,30 +743,403 @@ Date(workflow.audit.updatedDate) >= firstDayOfMonth
                     
                     // Update stats
                     updateStats();
+=======
+        // Function to parse the JSON data from the uploaded file
+        function parseWorkflowData() {
+            // Since we're working with directly pasted JSON, use that
+            const workflowData = [
+  {
+    "id": "sXZcC_4YxH-YkrRBFvZBLA",
+    "audit": {
+      "createdDate": "2022-08-30T23:19:58.621Z",
+      "createdBy": {
+        "id": "hyYiYkpS06pe9fTOcMJP5w",
+        "email": "juan@calicoit.com",
+        "username": "Juan Luevano"
+      },
+      "updatedDate": "2023-12-29T01:21:22.991Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "3cx PS Process",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/sXZcC_4YxH-YkrRBFvZBLA/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "ugQn2mwif1DlZ2HqrGJNEQ",
+    "audit": {
+      "createdDate": "2022-08-24T03:54:04.309Z",
+      "createdBy": {
+        "id": "hyYiYkpS06pe9fTOcMJP5w",
+        "email": "juan@calicoit.com",
+        "username": "Juan Luevano"
+      },
+      "updatedDate": "2024-12-27T23:49:35.922Z",
+      "updatedBy": {
+        "id": "hyYiYkpS06pe9fTOcMJP5w",
+        "email": "juan@calicoit.com",
+        "username": "Juan Luevano"
+      }
+    },
+    "name": "3CX User Setup",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/ugQn2mwif1DlZ2HqrGJNEQ/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "oBCfpOdOpMll_mOa4BBJjg",
+    "audit": {
+      "createdDate": "2023-01-03T20:28:29.307Z",
+      "createdBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      },
+      "updatedDate": "2023-07-24T20:24:55.931Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "ABF - DHCP Passthrough",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/oBCfpOdOpMll_mOa4BBJjg/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "qto8LXpPP79JqgILqG1F3A",
+    "audit": {
+      "createdDate": "2025-01-27T00:50:02.145Z",
+      "createdBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      },
+      "updatedDate": "2025-01-27T00:52:26.875Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "Account Manager Change",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/qto8LXpPP79JqgILqG1F3A/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "qDqBtzh3TGjhcZtNvQ1DfQ",
+    "audit": {
+      "createdDate": "2025-01-25T19:09:14.032Z",
+      "createdBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      },
+      "updatedDate": "2025-01-26T20:13:29.846Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "Account Review v.1 ",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/qDqBtzh3TGjhcZtNvQ1DfQ/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "gxOZcJM_hCu2-dAZCJhGMA",
+    "audit": {
+      "createdDate": "2025-03-12T22:46:05.311Z",
+      "createdBy": {
+        "id": "jdNSScoAhcySEIAg1zFMlA",
+        "email": "jason@calicoit.com",
+        "username": "Jason Zhang"
+      },
+      "updatedDate": "2025-04-02T17:20:31.077Z",
+      "updatedBy": {
+        "id": "jdNSScoAhcySEIAg1zFMlA",
+        "email": "jason@calicoit.com",
+        "username": "Jason Zhang"
+      }
+    },
+    "name": "Activate Windows Server on top of an evaluation version (trial) of Windows Server",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/gxOZcJM_hCu2-dAZCJhGMA/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "nMV0rJcwc5Vx1TX-Y_NN9w",
+    "audit": {
+      "createdDate": "2023-03-28T22:22:16.572Z",
+      "createdBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      },
+      "updatedDate": "2023-03-28T23:26:29.544Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "Adding a new user(s) in Pulseway PSA",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/nMV0rJcwc5Vx1TX-Y_NN9w/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "qLnfISezgsGGYiJ2nuRBDQ",
+    "audit": {
+      "createdDate": "2025-02-20T19:14:28.945Z",
+      "createdBy": {
+        "id": "vQj6Fgf23jxamGcnn6RHpQ",
+        "email": "steven@calicoit.com",
+        "username": "Steven Tran"
+      },
+      "updatedDate": "2025-03-05T21:16:59.120Z",
+      "updatedBy": {
+        "id": "jdNSScoAhcySEIAg1zFMlA",
+        "email": "jason@calicoit.com",
+        "username": "Jason Zhang"
+      }
+    },
+    "name": "Asset Prep",
+    "description": "Streamlining the proces of Asset Creation",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/qLnfISezgsGGYiJ2nuRBDQ/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "ozECX7zon0QuguaPdlBM-w",
+    "audit": {
+      "createdDate": "2025-01-24T18:39:30.684Z",
+      "createdBy": {
+        "id": "jdNSScoAhcySEIAg1zFMlA",
+        "email": "jason@calicoit.com",
+        "username": "Jason Zhang"
+      },
+      "updatedDate": "2025-03-03T21:13:33.732Z",
+      "updatedBy": {
+        "id": "vQj6Fgf23jxamGcnn6RHpQ",
+        "email": "steven@calicoit.com",
+        "username": "Steven Tran"
+      }
+    },
+    "name": "Axcient Appliance Implementation  ",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/ozECX7zon0QuguaPdlBM-w/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "g3kpXHuFrjoAW0aVoItF5g",
+    "audit": {
+      "createdDate": "2023-04-04T15:32:55.322Z",
+      "createdBy": {
+        "id": "pwvPzYWtIoLAmoRBqpFHJA",
+        "email": "Jordan@CalicoIT.com",
+        "username": "Jordan Resnick"
+      },
+      "updatedDate": "2023-04-04T15:33:08.213Z",
+      "updatedBy": {
+        "id": "pwvPzYWtIoLAmoRBqpFHJA",
+        "email": "Jordan@CalicoIT.com",
+        "username": "Jordan Resnick"
+      }
+    },
+    "name": "Billable or NonBillable?",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/g3kpXHuFrjoAW0aVoItF5g/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  }
+            ];
+            
+            // For this demo, we'll return the first 10 items - in a real scenario, you'd use all data
+            return workflowData;
+        }
+
+        // Main function to initialize the page
+        function init() {
+            const workflows = parseWorkflowData();
+            
+            // Set up event listeners
+            document.getElementById('search').addEventListener('input', renderWorkflows);
+            document.getElementById('sort').addEventListener('change', renderWorkflows);
+            
+            // Generate year filters
+            generateYearFilters(workflows);
+            
+            // Initial rendering
+            renderWorkflows();
+            
+            // Function to generate year filters
+            function generateYearFilters(workflows) {
+                const years = new Set();
+                workflows.forEach(workflow => {
+                    const createdYear = new Date(workflow.audit.createdDate).getFullYear();
+                    years.add(createdYear);
                 });
+                
+                const sortedYears = Array.from(years).sort((a, b) => b - a); // Sort in descending order
+                const filtersContainer = document.getElementById('yearFilters');
+                
+                sortedYears.forEach(year => {
+                    const button = document.createElement('button');
+                    button.classList.add('filter-button');
+                    button.setAttribute('data-year', year);
+                    button.textContent = year;
+                    button.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        document.querySelectorAll('.filter-button').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        renderWorkflows();
+                    });
+                    filtersContainer.appendChild(button);
+>>>>>>> parent of 4f6a5af (Update index.html)
+                });
+            }
+            
+            // Function to render workflows based on current filters and sort
+            function renderWorkflows() {
+                const searchTerm = document.getElementById('search').value.toLowerCase();
+                const sortMethod = document.getElementById('sort').value;
+                const activeYearFilter = document.querySelector('.filter-button.active').getAttribute('data-year');
+                
+                // Filter workflows
+                let filteredWorkflows = workflows.filter(workflow => {
+                    const nameMatch = workflow.name.toLowerCase().includes(searchTerm);
+                    const creatorMatch = workflow.audit.createdBy.username.toLowerCase().includes(searchTerm);
+                    const descriptionMatch = workflow.description && workflow.description.toLowerCase().includes(searchTerm);
+                    
+                    const matchesSearch = nameMatch || creatorMatch || descriptionMatch;
+                    
+                    // Apply year filter if not "all"
+                    if (activeYearFilter !== 'all') {
+                        const createdYear = new Date(workflow.audit.createdDate).getFullYear();
+                        return matchesSearch && createdYear == activeYearFilter;
+                    }
+                    
+                    return matchesSearch;
+                });
+                
+                // Sort workflows
+                filteredWorkflows.sort((a, b) => {
+                    switch(sortMethod) {
+                        case 'name':
+                            return a.name.localeCompare(b.name);
+                        case 'updated':
+                            return new Date(b.audit.updatedDate) - new Date(a.audit.updatedDate);
+                        case 'created':
+                            return new Date(b.audit.createdDate) - new Date(a.audit.createdDate);
+                        case 'creator':
+                            return a.audit.createdBy.username.localeCompare(b.audit.createdBy.username);
+                        default:
+                            return 0;
+                    }
+                });
+                
+                // Update stats
+                document.getElementById('stats').textContent = `Showing ${filteredWorkflows.length} of ${workflows.length} workflows`;
+                
+                // Render workflows
+                const contentDiv = document.getElementById('content');
+                
+                if (filteredWorkflows.length === 0) {
+                    contentDiv.innerHTML = '<div class="no-results">No workflows match your criteria</div>';
+                    return;
+                }
+                
+                let html = '<div class="workflow-grid">';
+                
+                filteredWorkflows.forEach(workflow => {
+                    const createdDate = new Date(workflow.audit.createdDate).toLocaleDateString();
+                    const updatedDate = new Date(workflow.audit.updatedDate).toLocaleDateString();
+                    
+                    html += `
+                        <div class="workflow-card">
+                            <div class="workflow-name">${workflow.name}</div>
+                            <div class="workflow-date">Updated: ${updatedDate}</div>
+                            <div class="workflow-creator">Created by: ${workflow.audit.createdBy.username}</div>
+                            ${workflow.description ? `<div class="workflow-description">${workflow.description}</div>` : ''}
+                            <a href="${workflow.links[0].href}" target="_blank" class="view-button">View Workflow</a>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                contentDiv.innerHTML = html;
+            }
         }
         
-        // Setup event listeners
-        document.getElementById('search-input').addEventListener('input', filterAndSortWorkflows);
-        document.getElementById('sort-select').addEventListener('change', filterAndSortWorkflows);
-        document.getElementById('reset-button').addEventListener('click', () => {
-            document.getElementById('search-input').value = '';
-            document.getElementById('sort-select').value = 'date-desc';
-            filterAndSortWorkflows();
-        });
-        
-        // Hidden div to store the initial data in case the fetch fails
-        const dataElement = document.createElement('div');
-        dataElement.id = 'workflow-data';
-        dataElement.style.display = 'none';
-        dataElement.textContent = JSON.stringify([
-            // The first few items from your data as a fallback
-            // Full data would be too large to include directly
-        ]);
-        document.body.appendChild(dataElement);
-        
-        // Start the application when the page loads
-        window.addEventListener('DOMContentLoaded', initApp);
+        // Initialize when the page loads
+        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
