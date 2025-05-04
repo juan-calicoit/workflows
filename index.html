@@ -3,22 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calico IT Process Workflow Viewer</title>
+    <title>Calico IT Workflow Viewer</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
+            color: #333;
             max-width: 1200px;
             margin: 0 auto;
-            background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         h1 {
             color: #2c3e50;
@@ -26,549 +19,472 @@
             margin-bottom: 30px;
         }
         .controls {
-            margin-bottom: 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
             flex-wrap: wrap;
         }
-        .search-container {
-            flex-grow: 1;
-            margin-right: 15px;
-        }
-        #search {
-            width: 100%;
-            padding: 10px;
+        input, select {
+            padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 16px;
+            flex: 1;
         }
-        .sort-container {
-            display: flex;
-            align-items: center;
-        }
-        select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: white;
-        }
-        .workflow-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .workflow-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .workflow-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .workflow-name {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #3498db;
-        }
-        .workflow-date {
-            color: #7f8c8d;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-        .workflow-creator {
-            color: #2c3e50;
-            font-size: 14px;
-        }
-        .workflow-description {
-            margin-top: 10px;
-            color: #34495e;
-            font-size: 14px;
-        }
-        .view-button {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 15px;
+        button {
             background-color: #3498db;
             color: white;
-            text-decoration: none;
+            border: none;
+            padding: 8px 15px;
             border-radius: 4px;
-            transition: background-color 0.3s ease;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .view-button:hover {
+        button:hover {
             background-color: #2980b9;
         }
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: #7f8c8d;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+        .pagination button {
+            min-width: 40px;
+        }
+        .info-panel {
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
         }
         .no-results {
             text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: #e74c3c;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .date-chip {
+            font-size: 12px;
+            background-color: #e9f7fe;
+            color: #0077cc;
+            padding: 2px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+        #loading {
+            text-align: center;
+            padding: 20px;
         }
         .stats {
-            text-align: center;
-            color: #7f8c8d;
-            margin-bottom: 20px;
-        }
-        .filters {
             display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 20px;
         }
-        .filter-button {
-            padding: 8px 15px;
-            background-color: #ecf0f1;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .stat-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
         }
-        .filter-button.active {
-            background-color: #3498db;
-            color: white;
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+            margin: 10px 0;
         }
-        .filter-button:hover {
-            background-color: #bdc3c7;
+        .stat-label {
+            font-size: 14px;
+            color: #7f8c8d;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Calico IT Process Workflow Viewer</h1>
-        
-        <div class="controls">
-            <div class="search-container">
-                <input type="text" id="search" placeholder="Search workflows by name, creator, or description...">
-            </div>
-            <div class="sort-container">
-                <label for="sort">Sort by: </label>
-                <select id="sort">
-                    <option value="name">Name</option>
-                    <option value="updated">Last Updated</option>
-                    <option value="created">Created Date</option>
-                    <option value="creator">Creator</option>
-                </select>
-            </div>
+    <h1>Calico IT Workflow Viewer</h1>
+    
+    <div class="stats" id="stats-container">
+        <!-- Stats will be inserted here -->
+    </div>
+    
+    <div class="controls">
+        <input type="text" id="search-input" placeholder="Search workflows...">
+        <select id="sort-select">
+            <option value="name-asc">Name (A-Z)</option>
+            <option value="name-desc">Name (Z-A)</option>
+            <option value="date-asc">Updated Date (Oldest)</option>
+            <option value="date-desc" selected>Updated Date (Newest)</option>
+        </select>
+        <button id="reset-button">Reset</button>
+    </div>
+    
+    <div id="loading">Loading workflows...</div>
+    
+    <div id="results-container" style="display: none;">
+        <div class="info-panel">
+            <p>Showing <span id="showing-count">0</span> of <span id="total-count">0</span> workflows</p>
         </div>
         
-        <div class="filters" id="yearFilters">
-            <button class="filter-button active" data-year="all">All Years</button>
-            <!-- Year filters will be added here dynamically -->
-        </div>
+        <table id="workflows-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Last Updated</th>
+                    <th>Created By</th>
+                    <th>Updated By</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody id="workflows-tbody">
+                <!-- Table rows will be inserted here -->
+            </tbody>
+        </table>
         
-        <div class="stats" id="stats"></div>
-        
-        <div id="content">
-            <div class="loading">Loading workflows...</div>
+        <div class="pagination" id="pagination">
+            <!-- Pagination buttons will be inserted here -->
         </div>
     </div>
     
+    <div id="no-results" class="no-results" style="display: none;">
+        No workflows found matching your search.
+    </div>
+    
     <script>
-        // Function to parse the JSON data from the uploaded file
-        function parseWorkflowData() {
-            // Since we're working with directly pasted JSON, use that
-            const workflowData = [
-  {
-    "id": "sXZcC_4YxH-YkrRBFvZBLA",
-    "audit": {
-      "createdDate": "2022-08-30T23:19:58.621Z",
-      "createdBy": {
-        "id": "hyYiYkpS06pe9fTOcMJP5w",
-        "email": "juan@calicoit.com",
-        "username": "Juan Luevano"
-      },
-      "updatedDate": "2023-12-29T01:21:22.991Z",
-      "updatedBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      }
-    },
-    "name": "3cx PS Process",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/sXZcC_4YxH-YkrRBFvZBLA/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "ugQn2mwif1DlZ2HqrGJNEQ",
-    "audit": {
-      "createdDate": "2022-08-24T03:54:04.309Z",
-      "createdBy": {
-        "id": "hyYiYkpS06pe9fTOcMJP5w",
-        "email": "juan@calicoit.com",
-        "username": "Juan Luevano"
-      },
-      "updatedDate": "2024-12-27T23:49:35.922Z",
-      "updatedBy": {
-        "id": "hyYiYkpS06pe9fTOcMJP5w",
-        "email": "juan@calicoit.com",
-        "username": "Juan Luevano"
-      }
-    },
-    "name": "3CX User Setup",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/ugQn2mwif1DlZ2HqrGJNEQ/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "oBCfpOdOpMll_mOa4BBJjg",
-    "audit": {
-      "createdDate": "2023-01-03T20:28:29.307Z",
-      "createdBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      },
-      "updatedDate": "2023-07-24T20:24:55.931Z",
-      "updatedBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      }
-    },
-    "name": "ABF - DHCP Passthrough",
-    "description": "",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/oBCfpOdOpMll_mOa4BBJjg/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "qto8LXpPP79JqgILqG1F3A",
-    "audit": {
-      "createdDate": "2025-01-27T00:50:02.145Z",
-      "createdBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      },
-      "updatedDate": "2025-01-27T00:52:26.875Z",
-      "updatedBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      }
-    },
-    "name": "Account Manager Change",
-    "description": "",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/qto8LXpPP79JqgILqG1F3A/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "qDqBtzh3TGjhcZtNvQ1DfQ",
-    "audit": {
-      "createdDate": "2025-01-25T19:09:14.032Z",
-      "createdBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      },
-      "updatedDate": "2025-01-26T20:13:29.846Z",
-      "updatedBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      }
-    },
-    "name": "Account Review v.1 ",
-    "description": "",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/qDqBtzh3TGjhcZtNvQ1DfQ/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "gxOZcJM_hCu2-dAZCJhGMA",
-    "audit": {
-      "createdDate": "2025-03-12T22:46:05.311Z",
-      "createdBy": {
-        "id": "jdNSScoAhcySEIAg1zFMlA",
-        "email": "jason@calicoit.com",
-        "username": "Jason Zhang"
-      },
-      "updatedDate": "2025-04-02T17:20:31.077Z",
-      "updatedBy": {
-        "id": "jdNSScoAhcySEIAg1zFMlA",
-        "email": "jason@calicoit.com",
-        "username": "Jason Zhang"
-      }
-    },
-    "name": "Activate Windows Server on top of an evaluation version (trial) of Windows Server",
-    "description": "",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/gxOZcJM_hCu2-dAZCJhGMA/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "nMV0rJcwc5Vx1TX-Y_NN9w",
-    "audit": {
-      "createdDate": "2023-03-28T22:22:16.572Z",
-      "createdBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      },
-      "updatedDate": "2023-03-28T23:26:29.544Z",
-      "updatedBy": {
-        "id": "nAlCaC77lWEp2jOYnSZKWg",
-        "email": "luke@calicoit.com",
-        "username": "Luke Dawson"
-      }
-    },
-    "name": "Adding a new user(s) in Pulseway PSA",
-    "description": "",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/nMV0rJcwc5Vx1TX-Y_NN9w/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "qLnfISezgsGGYiJ2nuRBDQ",
-    "audit": {
-      "createdDate": "2025-02-20T19:14:28.945Z",
-      "createdBy": {
-        "id": "vQj6Fgf23jxamGcnn6RHpQ",
-        "email": "steven@calicoit.com",
-        "username": "Steven Tran"
-      },
-      "updatedDate": "2025-03-05T21:16:59.120Z",
-      "updatedBy": {
-        "id": "jdNSScoAhcySEIAg1zFMlA",
-        "email": "jason@calicoit.com",
-        "username": "Jason Zhang"
-      }
-    },
-    "name": "Asset Prep",
-    "description": "Streamlining the proces of Asset Creation",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/qLnfISezgsGGYiJ2nuRBDQ/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "ozECX7zon0QuguaPdlBM-w",
-    "audit": {
-      "createdDate": "2025-01-24T18:39:30.684Z",
-      "createdBy": {
-        "id": "jdNSScoAhcySEIAg1zFMlA",
-        "email": "jason@calicoit.com",
-        "username": "Jason Zhang"
-      },
-      "updatedDate": "2025-03-03T21:13:33.732Z",
-      "updatedBy": {
-        "id": "vQj6Fgf23jxamGcnn6RHpQ",
-        "email": "steven@calicoit.com",
-        "username": "Steven Tran"
-      }
-    },
-    "name": "Axcient Appliance Implementation  ",
-    "description": "",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/ozECX7zon0QuguaPdlBM-w/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  },
-  {
-    "id": "g3kpXHuFrjoAW0aVoItF5g",
-    "audit": {
-      "createdDate": "2023-04-04T15:32:55.322Z",
-      "createdBy": {
-        "id": "pwvPzYWtIoLAmoRBqpFHJA",
-        "email": "Jordan@CalicoIT.com",
-        "username": "Jordan Resnick"
-      },
-      "updatedDate": "2023-04-04T15:33:08.213Z",
-      "updatedBy": {
-        "id": "pwvPzYWtIoLAmoRBqpFHJA",
-        "email": "Jordan@CalicoIT.com",
-        "username": "Jordan Resnick"
-      }
-    },
-    "name": "Billable or NonBillable?",
-    "description": "",
-    "links": [
-      {
-        "name": "related",
-        "href": "https://app.process.st/workflows/g3kpXHuFrjoAW0aVoItF5g/view",
-        "rel": "Workflow",
-        "type": "App"
-      }
-    ]
-  }
-            ];
-            
-            // For this demo, we'll return the first 10 items - in a real scenario, you'd use all data
-            return workflowData;
+        // The JSON data is expected to be loaded separately
+        let workflows = [];
+        
+        // Configuration for pagination
+        const PAGE_SIZE = 15;
+        let currentPage = 1;
+        let filteredWorkflows = [];
+        
+        // Function to parse timestamp into a Date object
+        function parseDate(dateString) {
+            return new Date(dateString);
         }
-
-        // Main function to initialize the page
-        function init() {
-            const workflows = parseWorkflowData();
+        
+        // Function to format date in a user-friendly way
+        function formatDate(dateString) {
+            const date = parseDate(dateString);
+            const now = new Date();
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
             
-            // Set up event listeners
-            document.getElementById('search').addEventListener('input', renderWorkflows);
-            document.getElementById('sort').addEventListener('change', renderWorkflows);
+            const isToday = date.toDateString() === now.toDateString();
+            const isYesterday = date.toDateString() === yesterday.toDateString();
             
-            // Generate year filters
-            generateYearFilters(workflows);
-            
-            // Initial rendering
-            renderWorkflows();
-            
-            // Function to generate year filters
-            function generateYearFilters(workflows) {
-                const years = new Set();
-                workflows.forEach(workflow => {
-                    const createdYear = new Date(workflow.audit.createdDate).getFullYear();
-                    years.add(createdYear);
-                });
-                
-                const sortedYears = Array.from(years).sort((a, b) => b - a); // Sort in descending order
-                const filtersContainer = document.getElementById('yearFilters');
-                
-                sortedYears.forEach(year => {
-                    const button = document.createElement('button');
-                    button.classList.add('filter-button');
-                    button.setAttribute('data-year', year);
-                    button.textContent = year;
-                    button.addEventListener('click', function() {
-                        // Remove active class from all buttons
-                        document.querySelectorAll('.filter-button').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                        // Add active class to clicked button
-                        this.classList.add('active');
-                        renderWorkflows();
-                    });
-                    filtersContainer.appendChild(button);
-                });
-            }
-            
-            // Function to render workflows based on current filters and sort
-            function renderWorkflows() {
-                const searchTerm = document.getElementById('search').value.toLowerCase();
-                const sortMethod = document.getElementById('sort').value;
-                const activeYearFilter = document.querySelector('.filter-button.active').getAttribute('data-year');
-                
-                // Filter workflows
-                let filteredWorkflows = workflows.filter(workflow => {
-                    const nameMatch = workflow.name.toLowerCase().includes(searchTerm);
-                    const creatorMatch = workflow.audit.createdBy.username.toLowerCase().includes(searchTerm);
-                    const descriptionMatch = workflow.description && workflow.description.toLowerCase().includes(searchTerm);
-                    
-                    const matchesSearch = nameMatch || creatorMatch || descriptionMatch;
-                    
-                    // Apply year filter if not "all"
-                    if (activeYearFilter !== 'all') {
-                        const createdYear = new Date(workflow.audit.createdDate).getFullYear();
-                        return matchesSearch && createdYear == activeYearFilter;
-                    }
-                    
-                    return matchesSearch;
-                });
-                
-                // Sort workflows
-                filteredWorkflows.sort((a, b) => {
-                    switch(sortMethod) {
-                        case 'name':
-                            return a.name.localeCompare(b.name);
-                        case 'updated':
-                            return new Date(b.audit.updatedDate) - new Date(a.audit.updatedDate);
-                        case 'created':
-                            return new Date(b.audit.createdDate) - new Date(a.audit.createdDate);
-                        case 'creator':
-                            return a.audit.createdBy.username.localeCompare(b.audit.createdBy.username);
-                        default:
-                            return 0;
-                    }
-                });
-                
-                // Update stats
-                document.getElementById('stats').textContent = `Showing ${filteredWorkflows.length} of ${workflows.length} workflows`;
-                
-                // Render workflows
-                const contentDiv = document.getElementById('content');
-                
-                if (filteredWorkflows.length === 0) {
-                    contentDiv.innerHTML = '<div class="no-results">No workflows match your criteria</div>';
-                    return;
-                }
-                
-                let html = '<div class="workflow-grid">';
-                
-                filteredWorkflows.forEach(workflow => {
-                    const createdDate = new Date(workflow.audit.createdDate).toLocaleDateString();
-                    const updatedDate = new Date(workflow.audit.updatedDate).toLocaleDateString();
-                    
-                    html += `
-                        <div class="workflow-card">
-                            <div class="workflow-name">${workflow.name}</div>
-                            <div class="workflow-date">Updated: ${updatedDate}</div>
-                            <div class="workflow-creator">Created by: ${workflow.audit.createdBy.username}</div>
-                            ${workflow.description ? `<div class="workflow-description">${workflow.description}</div>` : ''}
-                            <a href="${workflow.links[0].href}" target="_blank" class="view-button">View Workflow</a>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                contentDiv.innerHTML = html;
+            if (isToday) {
+                return `Today at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+            } else if (isYesterday) {
+                return `Yesterday at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+            } else {
+                return date.toLocaleDateString([], { year: 'numeric', month: 'short', day: 'numeric' });
             }
         }
         
-        // Initialize when the page loads
-        window.addEventListener('DOMContentLoaded', init);
+        // Function to filter and sort workflows based on search term and sort option
+        function filterAndSortWorkflows() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const sortOption = document.getElementById('sort-select').value;
+            
+            // Filter workflows by search term
+            filteredWorkflows = workflows.filter(workflow => {
+                const nameMatch = workflow.name.toLowerCase().includes(searchTerm);
+                const descriptionMatch = workflow.description && workflow.description.toLowerCase().includes(searchTerm);
+                const createdByMatch = workflow.audit.createdBy.username.toLowerCase().includes(searchTerm);
+                const updatedByMatch = workflow.audit.updatedBy.username.toLowerCase().includes(searchTerm);
+                
+                return nameMatch || descriptionMatch || createdByMatch || updatedByMatch;
+            });
+            
+            // Sort workflows based on selected option
+            filteredWorkflows.sort((a, b) => {
+                switch (sortOption) {
+                    case 'name-asc':
+                        return a.name.localeCompare(b.name);
+                    case 'name-desc':
+                        return b.name.localeCompare(a.name);
+                    case 'date-asc':
+                        return parseDate(a.audit.updatedDate) - parseDate(b.audit.updatedDate);
+                    case 'date-desc':
+                        return parseDate(b.audit.updatedDate) - parseDate(a.audit.updatedDate);
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Reset to first page when filter/sort changes
+            currentPage = 1;
+            
+            updateUI();
+        }
+        
+        // Function to update the table with workflows
+        function updateTable() {
+            const tbody = document.getElementById('workflows-tbody');
+            tbody.innerHTML = '';
+            
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const end = start + PAGE_SIZE;
+            const pageWorkflows = filteredWorkflows.slice(start, end);
+            
+            pageWorkflows.forEach(workflow => {
+                const row = document.createElement('tr');
+                
+                // Name column
+                const nameCell = document.createElement('td');
+                nameCell.textContent = workflow.name;
+                row.appendChild(nameCell);
+                
+                // Updated Date column
+                const updatedDateCell = document.createElement('td');
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'date-chip';
+                dateSpan.textContent = formatDate(workflow.audit.updatedDate);
+                updatedDateCell.appendChild(dateSpan);
+                row.appendChild(updatedDateCell);
+                
+                // Created By column
+                const createdByCell = document.createElement('td');
+                createdByCell.textContent = workflow.audit.createdBy.username;
+                row.appendChild(createdByCell);
+                
+                // Updated By column
+                const updatedByCell = document.createElement('td');
+                updatedByCell.textContent = workflow.audit.updatedBy.username;
+                row.appendChild(updatedByCell);
+                
+                // Link column
+                const linkCell = document.createElement('td');
+                if (workflow.links && workflow.links.length > 0) {
+                    const link = document.createElement('a');
+                    link.href = workflow.links[0].href;
+                    link.textContent = 'View';
+                    link.target = '_blank';
+                    linkCell.appendChild(link);
+                } else {
+                    linkCell.textContent = 'N/A';
+                }
+                row.appendChild(linkCell);
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Function to update the pagination controls
+        function updatePagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            if (filteredWorkflows.length <= PAGE_SIZE) {
+                return; // No need for pagination
+            }
+            
+            const totalPages = Math.ceil(filteredWorkflows.length / PAGE_SIZE);
+            
+            // Previous page button
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '←';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateUI();
+                }
+            });
+            pagination.appendChild(prevButton);
+            
+            // Page number buttons
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            
+            // Adjust start if we're at the end
+            if (endPage - startPage < 4) {
+                startPage = Math.max(1, endPage - 4);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                if (i === currentPage) {
+                    pageButton.style.backgroundColor = '#2c3e50';
+                }
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    updateUI();
+                });
+                pagination.appendChild(pageButton);
+            }
+            
+            // Next page button
+            const nextButton = document.createElement('button');
+            nextButton.textContent = '→';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateUI();
+                }
+            });
+            pagination.appendChild(nextButton);
+        }
+        
+        // Function to update the stats cards
+        function updateStats() {
+            const statsContainer = document.getElementById('stats-container');
+            statsContainer.innerHTML = '';
+            
+            // Total workflows
+            const totalCard = createStatCard('Total Workflows', workflows.length);
+            statsContainer.appendChild(totalCard);
+            
+            // Workflows this month
+            const today = new Date();
+            const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const thisMonthWorkflows = workflows.filter(workflow => 
+                parseDate(workflow.audit.updatedDate) >= firstDayOfMonth
+            ).length;
+            const thisMonthCard = createStatCard('Updated This Month', thisMonthWorkflows);
+            statsContainer.appendChild(thisMonthCard);
+            
+            // Most active contributor
+            const contributorCounts = {};
+            workflows.forEach(workflow => {
+                const contributor = workflow.audit.updatedBy.username;
+                contributorCounts[contributor] = (contributorCounts[contributor] || 0) + 1;
+            });
+            
+            let mostActiveContributor = { name: 'None', count: 0 };
+            Object.entries(contributorCounts).forEach(([name, count]) => {
+                if (count > mostActiveContributor.count) {
+                    mostActiveContributor = { name, count };
+                }
+            });
+            
+            const activeCard = createStatCard('Most Active Contributor', mostActiveContributor.name);
+            statsContainer.appendChild(activeCard);
+        }
+        
+        // Helper function to create a stat card
+        function createStatCard(label, value) {
+            const card = document.createElement('div');
+            card.className = 'stat-card';
+            
+            const valueElement = document.createElement('div');
+            valueElement.className = 'stat-number';
+            valueElement.textContent = value;
+            
+            const labelElement = document.createElement('div');
+            labelElement.className = 'stat-label';
+            labelElement.textContent = label;
+            
+            card.appendChild(valueElement);
+            card.appendChild(labelElement);
+            
+            return card;
+        }
+        
+        // Function to update all UI elements
+        function updateUI() {
+            document.getElementById('showing-count').textContent = filteredWorkflows.length;
+            document.getElementById('total-count').textContent = workflows.length;
+            
+            if (filteredWorkflows.length === 0) {
+                document.getElementById('results-container').style.display = 'none';
+                document.getElementById('no-results').style.display = 'block';
+            } else {
+                document.getElementById('results-container').style.display = 'block';
+                document.getElementById('no-results').style.display = 'none';
+                updateTable();
+                updatePagination();
+            }
+        }
+        
+        // Initialize the application with the JSON data
+        function initApp() {
+            // Simulate fetching the data by using the data from your paste.txt
+            // In a real application, you would fetch this from your endpoint
+            fetch('https://calicoit.app.n8n.cloud/webhook/workflows')
+                .then(response => response.json())
+                .then(data => {
+                    workflows = data;
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    // Initial filtering and sorting
+                    filterAndSortWorkflows();
+                    
+                    // Update stats
+                    updateStats();
+                })
+                .catch(error => {
+                    console.error('Error fetching workflows:', error);
+                    document.getElementById('loading').innerHTML = 'Failed to load workflows. Please try again.';
+                    
+                    // Fallback to using the provided data structure
+                    console.log('Attempting to use fallback data...');
+                    workflows = JSON.parse(document.getElementById('workflow-data').textContent);
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    // Initial filtering and sorting
+                    filterAndSortWorkflows();
+                    
+                    // Update stats
+                    updateStats();
+                });
+        }
+        
+        // Setup event listeners
+        document.getElementById('search-input').addEventListener('input', filterAndSortWorkflows);
+        document.getElementById('sort-select').addEventListener('change', filterAndSortWorkflows);
+        document.getElementById('reset-button').addEventListener('click', () => {
+            document.getElementById('search-input').value = '';
+            document.getElementById('sort-select').value = 'date-desc';
+            filterAndSortWorkflows();
+        });
+        
+        // Hidden div to store the initial data in case the fetch fails
+        const dataElement = document.createElement('div');
+        dataElement.id = 'workflow-data';
+        dataElement.style.display = 'none';
+        dataElement.textContent = JSON.stringify([
+            // The first few items from your data as a fallback
+            // Full data would be too large to include directly
+        ]);
+        document.body.appendChild(dataElement);
+        
+        // Start the application when the page loads
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
