@@ -480,45 +480,14 @@
             });
         }
         
-        // Load workflow data from JSON
+        // Load workflow data from the text area
         function loadWorkflowData() {
-            // This is the hardcoded JSON data
-            const jsonData = [
-                {
-                    "id": "sXZcC_4YxH-YkrRBFvZBLA",
-                    "audit": {
-                        "createdDate": "2022-08-30T23:19:58.621Z",
-                        "createdBy": {
-                            "id": "hyYiYkpS06pe9fTOcMJP5w",
-                            "email": "juan@calicoit.com",
-                            "username": "Juan Luevano"
-                        },
-                        "updatedDate": "2023-12-29T01:21:22.991Z",
-                        "updatedBy": {
-                            "id": "nAlCaC77lWEp2jOYnSZKWg",
-                            "email": "luke@calicoit.com",
-                            "username": "Luke Dawson"
-                        }
-                    },
-                    "name": "3cx PS Process",
-                    "links": [
-                        {
-                            "name": "related",
-                            "href": "https://app.process.st/workflows/sXZcC_4YxH-YkrRBFvZBLA/view",
-                            "rel": "Workflow",
-                            "type": "App"
-                        }
-                    ]
-                },
-                // Add other workflows from the JSON here
-                // For brevity, I'm not including all entries, but in the real implementation you would include the full JSON
-                
-            ];
-        
-            // We'll use the actual JSON string here instead of the placeholder
-            const workflowsJson = document.getElementById('workflows-json').textContent;
+            // Get the data from the textarea
+            const workflowsData = document.getElementById('workflows-data').value;
+            
             try {
-                workflowData = JSON.parse(workflowsJson);
+                // Parse the JSON data
+                workflowData = JSON.parse(workflowsData);
                 processWorkflowData(workflowData);
             } catch (error) {
                 console.error('Error parsing workflow data:', error);
@@ -752,9 +721,8 @@
         }
     </script>
     
-    <!-- Hidden element to store JSON data -->
-    <script id="workflows-json" type="application/json">
-[
+    <!-- This data would be loaded dynamically in a real application -->
+    <textarea id="workflows-data" style="display: none;">[
   {
     "id": "sXZcC_4YxH-YkrRBFvZBLA",
     "audit": {
@@ -806,7 +774,242 @@
         "type": "App"
       }
     ]
-  }
-]
-    </script>
+  },
+  {
+    "id": "oBCfpOdOpMll_mOa4BBJjg",
+    "audit": {
+      "createdDate": "2023-01-03T20:28:29.307Z",
+      "createdBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      },
+      "updatedDate": "2023-07-24T20:24:55.931Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "ABF - DHCP Passthrough",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/oBCfpOdOpMll_mOa4BBJjg/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "qto8LXpPP79JqgILqG1F3A",
+    "audit": {
+      "createdDate": "2025-01-27T00:50:02.145Z",
+      "createdBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      },
+      "updatedDate": "2025-01-27T00:52:26.875Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "Account Manager Change",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/qto8LXpPP79JqgILqG1F3A/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "qDqBtzh3TGjhcZtNvQ1DfQ",
+    "audit": {
+      "createdDate": "2025-01-25T19:09:14.032Z",
+      "createdBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      },
+      "updatedDate": "2025-01-26T20:13:29.846Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "Account Review v.1 ",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/qDqBtzh3TGjhcZtNvQ1DfQ/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "gxOZcJM_hCu2-dAZCJhGMA",
+    "audit": {
+      "createdDate": "2025-03-12T22:46:05.311Z",
+      "createdBy": {
+        "id": "jdNSScoAhcySEIAg1zFMlA",
+        "email": "jason@calicoit.com",
+        "username": "Jason Zhang"
+      },
+      "updatedDate": "2025-04-02T17:20:31.077Z",
+      "updatedBy": {
+        "id": "jdNSScoAhcySEIAg1zFMlA",
+        "email": "jason@calicoit.com",
+        "username": "Jason Zhang"
+      }
+    },
+    "name": "Activate Windows Server on top of an evaluation version (trial) of Windows Server",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/gxOZcJM_hCu2-dAZCJhGMA/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "nMV0rJcwc5Vx1TX-Y_NN9w",
+    "audit": {
+      "createdDate": "2023-03-28T22:22:16.572Z",
+      "createdBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      },
+      "updatedDate": "2023-03-28T23:26:29.544Z",
+      "updatedBy": {
+        "id": "nAlCaC77lWEp2jOYnSZKWg",
+        "email": "luke@calicoit.com",
+        "username": "Luke Dawson"
+      }
+    },
+    "name": "Adding a new user(s) in Pulseway PSA",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/nMV0rJcwc5Vx1TX-Y_NN9w/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "qLnfISezgsGGYiJ2nuRBDQ",
+    "audit": {
+      "createdDate": "2025-02-20T19:14:28.945Z",
+      "createdBy": {
+        "id": "vQj6Fgf23jxamGcnn6RHpQ",
+        "email": "steven@calicoit.com",
+        "username": "Steven Tran"
+      },
+      "updatedDate": "2025-03-05T21:16:59.120Z",
+      "updatedBy": {
+        "id": "jdNSScoAhcySEIAg1zFMlA",
+        "email": "jason@calicoit.com",
+        "username": "Jason Zhang"
+      }
+    },
+    "name": "Asset Prep",
+    "description": "Streamlining the proces of Asset Creation",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/qLnfISezgsGGYiJ2nuRBDQ/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "ozECX7zon0QuguaPdlBM-w",
+    "audit": {
+      "createdDate": "2025-01-24T18:39:30.684Z",
+      "createdBy": {
+        "id": "jdNSScoAhcySEIAg1zFMlA",
+        "email": "jason@calicoit.com",
+        "username": "Jason Zhang"
+      },
+      "updatedDate": "2025-03-03T21:13:33.732Z",
+      "updatedBy": {
+        "id": "vQj6Fgf23jxamGcnn6RHpQ",
+        "email": "steven@calicoit.com",
+        "username": "Steven Tran"
+      }
+    },
+    "name": "Axcient Appliance Implementation  ",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/ozECX7zon0QuguaPdlBM-w/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "g3kpXHuFrjoAW0aVoItF5g",
+    "audit": {
+      "createdDate": "2023-04-04T15:32:55.322Z",
+      "createdBy": {
+        "id": "pwvPzYWtIoLAmoRBqpFHJA",
+        "email": "Jordan@CalicoIT.com",
+        "username": "Jordan Resnick"
+      },
+      "updatedDate": "2023-04-04T15:33:08.213Z",
+      "updatedBy": {
+        "id": "pwvPzYWtIoLAmoRBqpFHJA",
+        "email": "Jordan@CalicoIT.com",
+        "username": "Jordan Resnick"
+      }
+    },
+    "name": "Billable or NonBillable?",
+    "description": "",
+    "links": [
+      {
+        "name": "related",
+        "href": "https://app.process.st/workflows/g3kpXHuFrjoAW0aVoItF5g/view",
+        "rel": "Workflow",
+        "type": "App"
+      }
+    ]
+  },
+  {
+    "id": "t21tnFRrgA7TZ6LeO9tJoA",
+    "audit": {
+      "createdDate": "2023-01-11T17:52:14.010Z",
+      "createdBy": {
+        "id": "pwvPzYWtIoLAmoRBqpFHJA",
+        "email": "Jordan@CalicoIT.com",
+        "username": "Jordan Resnick"
+      },
+      "updatedDate": "2023-03-23T23:43:00.975Z",
+      "updatedBy": {
+        "id": "pwvPzYWtIoLAmoRBqpFHJA",
+        "email": "Jordan@CalicoIT.com",
+        "username": "Jordan Resnick"
+      }
+    },
+    "name": "BitDefender Gravity Zone",
+    "description": "",
+    "links": [
+      {
+        "
 </body>
