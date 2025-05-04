@@ -126,9 +126,6 @@
             border-radius: 8px;
             margin-bottom: 20px;
             transition: background-color 0.3s ease;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
         }
         
         .search-bar {
@@ -151,32 +148,6 @@
         .search-bar input:focus {
             outline: none;
             border-color: var(--primary-color);
-        }
-
-        select {
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            background-color: var(--card-background);
-            color: var(--text-primary);
-            font-family: 'Poppins', sans-serif;
-            flex: 1;
-            min-width: 150px;
-        }
-        
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        button:hover {
-            background-color: #d56a2c;
         }
         
         .filter-buttons {
@@ -384,28 +355,42 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
+        
         .pagination {
             display: flex;
             justify-content: center;
             margin-top: 20px;
             gap: 5px;
         }
-
+        
         .pagination button {
-            min-width: 40px;
-        }
-
-        .info-panel {
-            margin-bottom: 20px;
             background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            min-width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .pagination button:hover,
+        .pagination button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .info-panel {
+            background-color: var(--card-background);
+            color: var(--text-primary);
             padding: 15px;
             border-radius: 8px;
+            margin-bottom: 20px;
             border-left: 4px solid var(--primary-color);
-            color: var(--text-primary);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
+        
         .no-results {
             text-align: center;
             padding: 20px;
@@ -415,15 +400,6 @@
             margin-top: 20px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
-        .date-chip {
-            font-size: 12px;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            white-space: nowrap;
-        }
     </style>
 </head>
 <body>
@@ -431,9 +407,6 @@
         <img src="https://calicoit.com/wp-content/uploads/2025/01/CalicoIT_Logo_tagline-W.png" alt="Calico IT Logo" class="logo logo-dark-mode">
         <img src="https://calicoit.com/wp-content/uploads/2022/12/CalicoIT_Logo_tagline-2.png" alt="Calico IT Logo" class="logo logo-light-mode">
         <span class="timestamp" id="timestamp"></span>
-        <button class="mode-toggle" id="mode-toggle" title="Toggle dark/light mode">
-            <i class="fas fa-moon"></i>
-        </button>
     </div>
     
     <div class="client-header">
@@ -444,24 +417,28 @@
                 <i class="fas fa-external-link-alt"></i> View in Process.st Portal
             </a>
         </div>
+        <div>
+            <button id="mode-toggle" class="mode-toggle" title="Toggle Light/Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
     </div>
     
     <div class="stats-grid" id="stats-container">
         <!-- Stats will be inserted here -->
     </div>
     
-    <div class="search-bar">
-        <input type="text" id="search-input" placeholder="Search workflows by name, description, or author...">
-    </div>
-    
     <div class="controls">
-        <select id="sort-select">
-            <option value="name-asc">Name (A-Z)</option>
-            <option value="name-desc">Name (Z-A)</option>
-            <option value="date-asc">Updated Date (Oldest)</option>
-            <option value="date-desc" selected>Updated Date (Newest)</option>
-        </select>
-        <button id="reset-button" class="filter-btn">Reset Filters</button>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search workflows...">
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-sort="date-desc">Newest First</button>
+            <button class="filter-btn" data-sort="date-asc">Oldest First</button>
+            <button class="filter-btn" data-sort="name-asc">Name (A-Z)</button>
+            <button class="filter-btn" data-sort="name-desc">Name (Z-A)</button>
+            <button class="filter-btn" id="reset-button">Reset Filters</button>
+        </div>
     </div>
     
     <div id="loading" class="loading">
@@ -469,27 +446,28 @@
         <p>Loading workflows...</p>
     </div>
     
-    <div id="results-container" style="display: none;">
+    <div id="results-container" class="table-container" style="display: none;">
+        <h2 class="table-title">Workflow Library</h2>
+        
         <div class="info-panel">
             <p>Showing <span id="showing-count">0</span> of <span id="total-count">0</span> workflows</p>
         </div>
         
-        <div class="table-container">
-            <table class="data-table" id="workflows-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Last Updated</th>
-                        <th>Created By</th>
-                        <th>Updated By</th>
-                        <th>Link</th>
-                    </tr>
-                </thead>
-                <tbody id="workflows-tbody">
-                    <!-- Table rows will be inserted here -->
-                </tbody>
-            </table>
-        </div>
+        <table class="data-table" id="workflows-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Last Updated</th>
+                    <th>Status</th>
+                    <th>Created By</th>
+                    <th>Updated By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="workflows-tbody">
+                <!-- Table rows will be inserted here -->
+            </tbody>
+        </table>
         
         <div class="pagination" id="pagination">
             <!-- Pagination buttons will be inserted here -->
@@ -497,15 +475,24 @@
     </div>
     
     <div id="no-results" class="no-results" style="display: none;">
-        <i class="fas fa-search" style="font-size: 24px; margin-bottom: 10px; color: var(--primary-color);"></i>
+        <i class="fas fa-search" style="font-size: 2em; margin-bottom: 10px; color: var(--primary-color);"></i>
         <p>No workflows found matching your search.</p>
     </div>
     
     <div class="footer">
-        <p>© 2025 Calico IT - Workflow Manager</p>
+        <p>© 2025 Calico IT Services. All rights reserved.</p>
     </div>
     
- (contributorCounts[contributor] || 0) + 1;
+Date(workflow.audit.updatedDate) >= firstDayOfMonth
+            ).length;
+            const thisMonthCard = createStatCard('Updated This Month', thisMonthWorkflows);
+            statsContainer.appendChild(thisMonthCard);
+            
+            // Most active contributor
+            const contributorCounts = {};
+            workflows.forEach(workflow => {
+                const contributor = workflow.audit.updatedBy.username;
+                contributorCounts[contributor] = (contributorCounts[contributor] || 0) + 1;
             });
             
             let mostActiveContributor = { name: 'None', count: 0 };
